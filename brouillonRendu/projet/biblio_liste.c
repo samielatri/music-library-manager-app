@@ -36,19 +36,21 @@ void insere(Biblio *B, int num, char *titre, char *artiste) {
 		exit(EXIT_FAILURE) ; 
 	}
 
+	/* commun aux deux cas */
 	nouv->num = num ;
 	nouv->titre = titre ; 
 	nouv->artiste = artiste ; 
 	
+	// cas1
 	if(B->L != NULL){
 		nouv->suiv = B->L ; 
 		B->L = nouv ; 
 		B->nE = ++ (B->nE) ;
 
-		return ; 
+		return ; // sortie pr'ematur'ee
 	}
 
-	// cas : B->L == NULL
+	// cas2 : B->L == NULL
 	nouv->suiv = NULL ; 
 	B->L = nouv ; 
 	B -> nE = 1 ; 	
@@ -101,12 +103,29 @@ void libere_biblio(Biblio *B) {
 	return ;
 }
 
+/* affiche un morceau (BONUS : FONCTION NON UTILISEE) */
 void afficheMorceau(CellMorceau *cell) {
 	printf("$L$ %8d $ %-32.32s $ %-32.32s $L$\n", cell->num, cell->titre, cell->artiste);
+	return ;
 }
 
+/* affiche tous les morceaux de la biblio B */
 void affiche(Biblio *B) {
-   
+	
+	if (B->L == NULL) {
+	   printf ("Biblio vide !\n") ;
+	   return ; 
+    }
+	
+	CellMorceau *temp = B->L ; 
+
+	int i = 0 ; 	
+	for(i = 0 ; i < (B->nE) ; i++) {
+		printf("%d\t%s\t%s\n", temp->num, temp->titre, temp->artiste) ;
+		temp = temp->suiv ; 
+	} 
+
+    return ; 
 }
 
 Biblio *uniques (Biblio *B) {
@@ -117,10 +136,10 @@ Biblio *uniques (Biblio *B) {
 	Affiche tous les morceaux contenus dans une biblio dont le numero d'enregistrement est num 
 	En bonus, elle affiche le nombre morceaux trouv'es ! 
 */
-CellMorceau * rechercheParNum(Biblio *B, int num) {
+CellMorceau *rechercheParNum(Biblio *B, int num) {
 	CellMorceau *temp = B->L ;
 	int cpt = 0 ; // compteur du nombre de morceaux trouv'es
-	// on n'a jamais mentionné le fait que num (enregistrement) soit unique ou qu'on puisse pas avoir le m^eme plusieurs fois
+	// on n'a jamais mentionn'e le fait que num (enregistrement) soit unique ou qu'on puisse pas avoir le m^eme plusieurs fois
 	while(temp != NULL) {
 		if( (temp->num) == num ) {
 			printf("%d\t%s\t%s\n", (temp->num), (temp->titre), (temp->artiste)) ;
@@ -136,19 +155,20 @@ CellMorceau * rechercheParNum(Biblio *B, int num) {
 		printf("\n%d morceau(x) trouv'e(s).\n", cpt) ;
 	}
 
-	return ; 
+	return temp ; 
 }
 
 /* 
 	Affiche tous les morceaux contenus dans une biblio dont le titre est titre 
 	En bonus, elle affiche le nombre morceaux trouv'es ! 
+	(retourne derniere structure parcourue)
 */
 CellMorceau *rechercheParTitre(Biblio *B, char * titre) {
 	CellMorceau *temp = B->L ;
 	int cpt = 0 ; // compteur du nombre de morceaux trouv'es
 	// on n'a jamais mentionné le fait que num (enregistrement) soit unique ou qu'on puisse pas avoir le m^eme plusieurs fois
 	while(temp != NULL) {
-		if( strcmp(temp->titre) == 0 ) {
+		if( strcmp(temp->titre, titre) == 0 ) {
 			printf("%d\t%s\t%s\n", (temp->num), (temp->titre), (temp->artiste)) ;
 			++ cpt ; 
 		}
@@ -162,18 +182,25 @@ CellMorceau *rechercheParTitre(Biblio *B, char * titre) {
 		printf("\n%d morceau(x) trouv'e(s).\n", cpt) ;
 	}
 
-	return ; 		
+	return temp ; 		
 }
-
+/*
+	Retourne une nouvelle biblio qui contient uniquement les morceaux de l'artiste artiste
+*/
 Biblio *extraireMorceauxDe(Biblio *B, char * artiste) {
 	
 }
 
-
+/*
+	Réalise l'insertion d'un nouveau morceau (de titre titre et dont le nom de l'interprète est artiste).
+	Attention le numéro associé au morceau doit être différent de celui de tous les morceaux
+	présents dans B
+*/
 void insereSansNum(Biblio *B, char *titre, char *artiste) {
 	
 }
 
+/* Supprime le morceau de numéro num de la Biblio B */
 int supprimeMorceau(Biblio *B, int num) {
 	
 }
