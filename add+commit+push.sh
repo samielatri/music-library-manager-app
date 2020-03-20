@@ -1,16 +1,16 @@
 #!/bin/bash
 
-echo "debut\n"
+echo "debut"
 
-git add -A
-echo "etape1->ok\n"
+git add --all
+echo "etape1->ok"
 
 git commit -m "${1}"
-echo "etape2->ok\n"
+echo "etape2->ok"
 
-git push
-echo "etape3->ok\n"
+git push --force
+echo "etape3->ok"
 
-echo "FIN\n"
+echo "Fin"
 
 exit 0
