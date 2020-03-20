@@ -8,6 +8,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+/* taille buffeur */
+#define TAILLEBUFF 256 
+
 typedef struct CellMorceau CellMorceau;
 
 typedef struct Biblio Biblio;
